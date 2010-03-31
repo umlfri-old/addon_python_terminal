@@ -134,6 +134,8 @@ class IterableIPShell:
     @rtype: string
     '''
     self.history_level -= 1
+    if not self._getHistory():
+      self.history_level +=1
     return self._getHistory()
   
   def historyForward(self):
@@ -143,7 +145,8 @@ class IterableIPShell:
     @return: The command string.
     @rtype: string
     '''
-    self.history_level += 1
+    if self.history_level < 0:
+      self.history_level += 1
     return self._getHistory()
   
   def _getHistory(self):
@@ -156,7 +159,6 @@ class IterableIPShell:
     try:
       rv = self.IP.user_ns['In'][self.history_level].strip('\n')
     except IndexError:
-      self.history_level = 0
       rv = ''
     return rv
 
@@ -258,10 +260,6 @@ class ConsoleView(gtk.TextView):
     Initialize console view.
     '''
     gtk.TextView.__init__(self)
-
-    self.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse('white'))
-    self.modify_text(gtk.STATE_NORMAL, gtk.gdk.color_parse('black'))
-
     self.modify_font(pango.FontDescription('Mono'))
     self.set_cursor_visible(True)
     self.text_buffer = self.get_buffer()
@@ -398,11 +396,13 @@ class ConsoleView(gtk.TextView):
     selection_iter = self.text_buffer.get_iter_at_mark(selection_mark)
     start_iter = self.text_buffer.get_iter_at_mark(self.line_start)
     if event.keyval == gtk.keysyms.Home:
-      if event.state == 0: 
-        self.text_buffer.place_cursor(start_iter)
-        return True
-      elif event.state == gtk.gdk.SHIFT_MASK:
+      if event.state & gtk.gdk.CONTROL_MASK or event.state & gtk.gdk.MOD1_MASK:
+        pass
+      elif event.state & gtk.gdk.SHIFT_MASK:
         self.text_buffer.move_mark(insert_mark, start_iter)
+        return True
+      else:
+        self.text_buffer.place_cursor(start_iter)
         return True
     elif event.keyval == gtk.keysyms.Left:
       insert_iter.backward_cursor_position()
@@ -512,4 +512,12 @@ class IPythonView(ConsoleView, IterableIPShell):
     if rv: rv = rv.strip('\n')
     self.showReturned(rv)
     self.cout.truncate(0)
+    
+if __name__ == "__main__":
+  window = gtk.Window()
+  window.set_default_size(640, 320)
+  window.connect('delete-event', lambda x, y: gtk.main_quit())
+  window.add(IPythonView())
+  window.show_all()
+  gtk.main()
     
