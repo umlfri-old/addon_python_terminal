@@ -37,7 +37,7 @@ def pluginMain(interface):
     
     interface.GetAdapter().GetButtonBar().AddButton(
         'OpenPythonConsole',
-        lambda: W.show_all(),
+        lambda *a: W.show_all(),
         -1,
         'Python Console',
         imagefilename = os.path.abspath(
