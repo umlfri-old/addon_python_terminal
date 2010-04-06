@@ -35,7 +35,7 @@ def pluginMain(interface):
     W.connect('delete_event', deleteEvent)
     # W.connect('destroy', lambda x: (W.hide(), False)[-1])
     
-    interface.GetAdapter().GetButtonBar().AddButton(
+    interface.GetAdapter().GetGuiManager().GetButtonBar().AddButton(
         'OpenPythonConsole',
         lambda *a: W.show_all(),
         -1,
