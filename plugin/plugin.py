@@ -1,7 +1,13 @@
 #!/usr/bin/python
 
+try:
+    from ipython_view import IPythonView
+    USE_IPYTHON = True
+except:
+    from pyconsole import Console
+    USE_IPYTHON = False
+    
 import gtk
-from ipython_view import *
 import pango
 import platform
 import os.path
@@ -21,8 +27,11 @@ def pluginMain(interface):
     W.set_resizable(True)
     S = gtk.ScrolledWindow()
     S.set_policy(gtk.POLICY_AUTOMATIC,gtk.POLICY_AUTOMATIC)
-    V = IPythonView()
-    V.updateNamespace({'i' : interface, 'exit': lambda: None})
+    if USE_IPYTHON:
+        V = IPythonView()
+        V.updateNamespace({'i' : interface, 'exit': lambda: None})
+    else:
+        V = Console(locals = {'i' : interface, 'exit': lambda: None})
     V.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse('black'))
     V.modify_text(gtk.STATE_NORMAL, gtk.gdk.color_parse('white'))
     V.modify_font(pango.FontDescription(FONT))

@@ -20,10 +20,7 @@ import pango
 from StringIO import StringIO
 import thread
 
-try:
-  import IPython
-except ImportError:
-  IPython = None
+import IPython
 
 class IterableIPShell:
   '''
