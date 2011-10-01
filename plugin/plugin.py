@@ -49,7 +49,7 @@ def pluginMain(interface):
         lambda *a: W.show_all(),
         -1,
         'Python Console',
-        imagefilename = os.path.join('icons', 'pythonTerminal-24.png')
+        imageFileName = os.path.join('icons', 'pythonTerminal-24.png')
     )
     
     interface.SetGtkMainloop()
