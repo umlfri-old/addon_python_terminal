@@ -12,6 +12,8 @@ import pango
 import platform
 import os.path
 
+from org.umlfri.api.mainLoops import GtkMainLoop
+
 def deleteEvent(widget, event):
     widget.hide()
     return True
@@ -44,14 +46,14 @@ def pluginMain(interface):
     W.connect('delete_event', deleteEvent)
     # W.connect('destroy', lambda x: (W.hide(), False)[-1])
     
-    interface.GetAdapter().GetGuiManager().GetButtonBar().AddButton(
+    interface.gui_manager.button_bar.add_button(
         'OpenPythonConsole',
         lambda *a: W.show_all(),
         -1,
         'Python Console',
-        imageFileName = os.path.join('icons', 'pythonTerminal-24.png')
+        image_file_name = os.path.join('icons', 'pythonTerminal-24.png')
     )
     
-    interface.SetGtkMainloop()
+    interface.set_main_loop(GtkMainLoop())
     
     # gtk.main()

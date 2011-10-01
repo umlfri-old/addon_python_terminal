@@ -14,8 +14,12 @@
     <Description>
         Shows cool python console.
     </Description>
+    
+    <Dependencies>
+        <AddOn uri="urn:umlfri.org:starters:python" />
+    </Dependencies>
 
     <Plugin>
-        <Code os="all" language="python" path="plugin" />
+        <Code os="all" language="pythonNew" path="plugin" />
     </Plugin>
 </AddOn>
