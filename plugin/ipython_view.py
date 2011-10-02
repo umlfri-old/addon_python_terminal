@@ -22,6 +22,9 @@ import thread
 
 import IPython
 
+import pyreadline.unicode_helper
+pyreadline.unicode_helper.pyreadline_codepage = 'utf8'
+
 class IterableIPShell:
   '''
   Create an IPython instance. Does not start a blocking event loop,
