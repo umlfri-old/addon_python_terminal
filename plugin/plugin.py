@@ -51,9 +51,10 @@ def pluginMain(interface):
         lambda *a: W.show_all(),
         -1,
         'Python Console',
-        image_file_name = os.path.join('icons', 'pythonTerminal-24.png')
+        imagefilename = os.path.join('icons', 'pythonTerminal-24.png')
     )
     
+    interface.transaction.autocommit = True
     interface.set_main_loop(GtkMainLoop())
     
     # gtk.main()
