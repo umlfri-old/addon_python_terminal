@@ -22,8 +22,9 @@ import thread
 
 import IPython
 
-import pyreadline.unicode_helper
-pyreadline.unicode_helper.pyreadline_codepage = 'utf8'
+if os.name == 'win32':
+    import pyreadline.unicode_helper
+    pyreadline.unicode_helper.pyreadline_codepage = 'utf8'
 
 class IterableIPShell:
   '''
