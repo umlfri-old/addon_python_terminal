@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from ipython_view import IPythonView
 try:
     from ipython_view import IPythonView
     USE_IPYTHON = True
