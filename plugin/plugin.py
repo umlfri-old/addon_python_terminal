@@ -11,7 +11,6 @@ import gtk
 import pango
 import platform
 import os.path
-import ctypes
 
 from org.umlfri.api.mainLoops import GtkMainLoop
 
@@ -46,10 +45,6 @@ def pluginMain(interface):
     # W.show()
     W.connect('delete_event', deleteEvent)
     # W.connect('destroy', lambda x: (W.hide(), False)[-1])
-    
-    def onClick():
-        W.show_all()
-        #ctypes.windll.user32.SwitchToThisWindow(W.window.handle, True)
     
     interface.gui_manager.button_bar.add_button(
         'OpenPythonConsole',
