@@ -528,11 +528,11 @@ class IPythonView(ConsoleView, IterableIPShell):
         IterableIPShell.__init__(self, cout=self.cout, cerr=self.cout,
             input_func=self.raw_input)
         #    self.connect('key_press_event', self.keyPress)
+        self.interrupt = False
         self.execute()
         self.prompt = self.generatePrompt(False)
         self.cout.truncate(0)
         self.showPrompt(self.prompt)
-        self.interrupt = False
 
     def raw_input(self, prompt=''):
         """
