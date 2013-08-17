@@ -4,8 +4,8 @@ try:
     from ipython_view import IPythonView
     USE_IPYTHON = True
 except:
-    from pyconsole import Console
     USE_IPYTHON = False
+from pyconsole import Console
     
 import gtk
 import pango
@@ -19,6 +19,8 @@ def deleteEvent(widget, event):
     return True
 
 def pluginMain(interface):
+    global USE_IPYTHON
+    
     if platform.system()=="Windows":
         FONT = "Lucida Console 9"
     else:
@@ -30,9 +32,13 @@ def pluginMain(interface):
     S = gtk.ScrolledWindow()
     S.set_policy(gtk.POLICY_AUTOMATIC,gtk.POLICY_AUTOMATIC)
     if USE_IPYTHON:
-        V = IPythonView()
-        V.updateNamespace({'i' : interface, 'exit': lambda: None})
-    else:
+        try:
+            V = IPythonView()
+            V.updateNamespace({'i' : interface, 'exit': lambda: None})
+        except:
+            USE_IPYTHON = False
+    
+    if not USE_IPYTHON:
         V = Console(locals = {'i' : interface, 'exit': lambda: None})
     V.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse('black'))
     V.modify_text(gtk.STATE_NORMAL, gtk.gdk.color_parse('white'))
